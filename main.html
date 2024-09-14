@@ -3,20 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <title>Binary Counter</title>
+<style>
+    .digit-container {
+        display: inline-block;
+        width: 50px; /* Fixed width for each digit */
+        font-size: 32px; /* Large font size for visibility */
+        border: 1px solid #000; /* Optional: border to make each digit stand out */
+        text-align: center;
+        margin: 2px;
+    }
+    #decimalContainer, #binaryContainer {
+        display: flex;
+        justify-content: center; /* Center the digits horizontally */
+        margin-bottom: 20px; /* Spacing below each counter */
+    }
+    button {
+        font-size: 20px;
+        padding: 10px 20px;
+    }
+    #spacer {
+        margin-top: 200px; /* Increased space as requested */
+    }
+</style>
 </head>
 <body>
 <h2>Binary Counter</h2>
-<div>
-    <label for="decimal">Decimal:</label>
-    <input type="number" id="decimal" value="0">
-</div>
-<div>
-    <label for="binary">Binary:</label>
-    <input type="text" id="binary" value="0">
+<div id="binaryContainer">
+    <span class="digit-container">0</span>
 </div>
 <button onclick="increment()">+1</button>
+<button onclick="decrement()">-1</button>
 <button onclick="resetCounter()">Reset</button>
+<div id="spacer"></div>
+<div id="decimalContainer">
+    <span class="digit-container">0</span>
+</div>
+<script>
+document.getElementById('binaryContainer').addEventListener('input', function() {
+    updateDecimal(this.textContent.replace(/\\D/g, ''));
+});
 
-<script src="counter.js"></script>
+function increment() {
+    let decimal = Array.from(document.getElementById('decimalContainer').children).reduce((acc, el) => acc + el.textContent, '');
+    decimal = parseInt(decimal) + 1;
+    updateCounters(decimal);
+}
+
+function decrement() {
+    let decimal = Array.from(document.getElementById('decimalContainer').children).reduce((acc, el) => acc + el.textContent, '');
+    decimal = parseInt(decimal);
+    if (decimal > 0) {
+        updateCounters(decimal - 1);
+    }
+}
+
+function resetCounter() {
+    updateCounters(0);
+}
+
+function updateCounters(value) {
+    let binary = parseInt(value).toString(2);
+    let binarySpans = binary.padStart(8, '0').split('').map(digit => `<span class="digit-container">${digit}</span>`).join('');
+    document.getElementById('binaryContainer').innerHTML = binarySpans;
+    let decimalSpans = value.toString().padStart(3, '0').split('').map(digit => `<span class="digit-container">${digit}</span>`).join('');
+    document.getElementById('decimalContainer').innerHTML = decimalSpans;
+}
+
+function updateDecimal(value) {
+    let decimal = parseInt(value, 2);
+    if (!isNaN(decimal)) {
+        updateCounters(decimal);
+    } else {
+        alert("Invalid binary number.");
+    }
+}
+</script>
 </body>
 </html>
