@@ -39,8 +39,8 @@
     <span class="digit-container">0</span>
 </div>
 <script>
-document.getElementById('binaryContainer').addEventListener('input', function() {
-    updateDecimal(this.textContent.replace(/\\D/g, ''));
+document.addEventListener('DOMContentLoaded', function() {
+    updateCounters(0); // Initialize the counter with 0 or any other value you'd like to start with
 });
 
 function increment() {
