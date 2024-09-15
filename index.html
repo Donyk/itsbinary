@@ -6,24 +6,28 @@
 <style>
     .digit-container {
         display: inline-block;
-        width: 50px; /* Fixed width for each digit */
-        font-size: 32px; /* Large font size for visibility */
-        border: 1px solid #000; /* Optional: border to make each digit stand out */
+        width: 50px;
+        font-size: 32px;
+        border: 1px solid #000;
         text-align: center;
         margin: 2px;
     }
     #decimalContainer, #binaryContainer {
         display: flex;
-        justify-content: center; /* Center the digits horizontally */
-        margin-bottom: 20px; /* Spacing below each counter */
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .buttons-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
     }
     button {
         font-size: 30px;
-        justify-content: center; /* Center horizontally */
         padding: 10px 20px;
     }
     #spacer {
-        margin-top: 200px; /* Increased space as requested */
+        margin-top: 200px;
     }
 </style>
 </head>
@@ -32,16 +36,18 @@
 <div id="binaryContainer">
     <span class="digit-container">0</span>
 </div>
-<button onclick="increment()">+1</button>
-<button onclick="decrement()">-1</button>
-<button onclick="resetCounter()">Reset</button>
+<div class="buttons-container">
+    <button onclick="increment()">+1</button>
+    <button onclick="decrement()">-1</button>
+    <button onclick="resetCounter()">Reset</button>
+</div>
 <div id="spacer"></div>
 <div id="decimalContainer">
     <span class="digit-container">0</span>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    updateCounters(0); // Initialize the counter with 0 or any other value you'd like to start with
+    updateCounters(0); // Initialize the counter with 0
 });
 
 function increment() {
@@ -68,15 +74,6 @@ function updateCounters(value) {
     document.getElementById('binaryContainer').innerHTML = binarySpans;
     let decimalSpans = value.toString().padStart(3, '0').split('').map(digit => `<span class="digit-container">${digit}</span>`).join('');
     document.getElementById('decimalContainer').innerHTML = decimalSpans;
-}
-
-function updateDecimal(value) {
-    let decimal = parseInt(value, 2);
-    if (!isNaN(decimal)) {
-        updateCounters(decimal);
-    } else {
-        alert("Invalid binary number.");
-    }
 }
 </script>
 </body>
